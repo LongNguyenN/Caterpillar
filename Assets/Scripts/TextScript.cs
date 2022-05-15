@@ -11,8 +11,14 @@ public class TextScript : MonoBehaviour
   private TouchScreenKeyboard keyboard;
   private int count = 0;
 
+  // public TextManager textManager;
+
+  public start() {
+    currentWord = textManager.generateFirstWord();
+  }
+
   public void onReturnPressed() {
-    string score = onSuggestionInput(hello.text);
+    string score = textManager.onSuggestionInput(hello.text);
     if(score != null) {
       currentWord.text = "Current Word:\n" + hello.text;
       completed.text = score;
