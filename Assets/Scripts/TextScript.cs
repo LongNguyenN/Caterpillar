@@ -3,34 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/*
+  Handles all the text behaviour
+*/
 public class TextScript : MonoBehaviour
 {
   public TMP_InputField hello;
   public TextMeshProUGUI currentWord;
   public TextMeshProUGUI completed;
-  private TouchScreenKeyboard keyboard;
-  private int count = 0;
+  public GameObject textHandler;
 
-  // public TextManager textManager;
-
-  public start() {
-    currentWord = textManager.generateFirstWord();
+  //Auto generate a word upon the game starting
+  public void Start() {
+    currentWord.text = "Current Word:\n" + textHandler.GetComponent<TextManagerScript>().generateFirstWord();
   }
 
+  //Once the user presses the enter button, this function checks
+  //if the user input is valid and how to proceed with the game
   public void onReturnPressed() {
-    string score = textManager.onSuggestionInput(hello.text);
+    string score = textHandler.GetComponent<TextManagerScript>().onSuggestionInput(hello.text);
     if(score != null) {
       currentWord.text = "Current Word:\n" + hello.text;
-      completed.text = score;
+      completed.text = "Have Completed:\n" + score;
     }
     hello.text = "";
   }
 
-  //A user has given an input via pressing the return key
-  //Returns a string which contains the completed letters list
-  //Returns null if user input is invalid
-  string onSuggestionInput(string userInput) {
-    count++;
-    return "Have Completed:\nYou have not won yet!" + count;
-  }
 }
